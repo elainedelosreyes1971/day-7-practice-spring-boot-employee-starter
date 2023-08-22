@@ -1,4 +1,6 @@
-package com.thoughtworks.springbootemployee.controller;public class Company {
+package com.thoughtworks.springbootemployee.controller;
+
+public class Company {
     private Long companyId;
     private String companyName;
 

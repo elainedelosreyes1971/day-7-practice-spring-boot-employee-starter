@@ -18,35 +18,35 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Company findByCompanyId(@PathVariable Long companyId){
+    public Company findByCompanyId(@PathVariable Long companyId) {
         return companyRepository.findByCompanyId(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> findEmployeesUnderCompany(@PathVariable Long companyId){
+    public List<Employee> findEmployeesUnderCompany(@PathVariable Long companyId) {
         return companyRepository.findEmployeesUnderCompany(companyId);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Company> listCompanyByPage(@RequestParam Long pageNumber, Long pageSize){
+    public List<Company> listCompanyByPage(@RequestParam Long pageNumber, Long pageSize) {
         return companyRepository.listCompanyByPage(pageNumber, pageSize);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
-    public Company createCompany(@RequestBody Company company){
+    public Company createCompany(@RequestBody Company company) {
         return companyRepository.createCompany(company);
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompany(@PathVariable long companyId, @RequestBody Company newCompany){
+    public Company updateCompany(@PathVariable long companyId, @RequestBody Company newCompany) {
         Company company = companyRepository.findByCompanyId(companyId);
         company.setCompanyName(newCompany.getCompanyName());
         return company;
     }
 
     @DeleteMapping("/{companyId}")
-    public String deleteCompany(@PathVariable long companyId){
+    public String deleteCompany(@PathVariable long companyId) {
         companyRepository.deleteCompany(companyId);
         return "Company Deleted!";
     }
