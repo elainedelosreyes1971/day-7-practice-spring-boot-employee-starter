@@ -1,10 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,10 @@ public class CompanyController {
     @GetMapping("/{companyId}/employees")
     public List<Employee> findEmployeesUnderCompany(@PathVariable Long companyId){
         return companyRepository.findEmployeesUnderCompany(companyId);
+    }
+
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public List<Company> listCompanyByPage(@RequestParam Long pageNumber, Long pageSize){
+        return companyRepository.listCompanyByPage(pageNumber, pageSize);
     }
 }

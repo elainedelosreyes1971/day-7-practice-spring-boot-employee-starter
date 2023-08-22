@@ -33,4 +33,16 @@ public class CompanyRepository {
                 .filter(company -> company.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());
     }
+
+    public List<Company> listCompanyByPage(Long pageNumber, Long pageSize) {
+        int index = 1;
+        List<Company> filteredCompanyList = new ArrayList<>();
+        for(Company company : companies){
+            if(index >= pageNumber && index <= pageSize){
+                filteredCompanyList.add(company);
+            }
+            index++;
+        }
+        return filteredCompanyList;
+    }
 }

@@ -49,10 +49,10 @@ public class EmployeeRepository {
     }
 
     public List<Employee> listByPage(Long pageNumber, Long pageSize) {
-        int index = 0;
+        int index = 1;
         List<Employee> filteredList = new ArrayList<>();
         for(Employee employee : employees){
-            if((index >= pageNumber) && (index <= pageSize)){
+            if(index >= pageNumber && index <= pageSize){
                 filteredList.add(employee);
             }
             index++;
