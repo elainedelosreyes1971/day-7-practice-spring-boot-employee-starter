@@ -13,12 +13,12 @@ public class Employee {
     }
 
     public Employee(long companyId, long id, String name, Integer age, String gender, Integer salary) {
+        this.companyId = companyId;
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.companyId = companyId;
     }
 
     public Long getId() {

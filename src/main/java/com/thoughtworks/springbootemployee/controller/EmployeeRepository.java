@@ -37,8 +37,9 @@ public class EmployeeRepository {
 
     public Employee createEmployee(Employee employee) {
         Long maxId = generateId();
-        employees.add(new Employee(employee.getCompanyId(), ++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary()));
-        return employee;
+        Employee newEmployee = new Employee(employee.getCompanyId(), ++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        employees.add(newEmployee);
+        return newEmployee;
     }
 
     private Long generateId() {

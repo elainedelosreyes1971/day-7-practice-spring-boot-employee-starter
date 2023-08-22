@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 public class CompanyRepository {
 
     private static final List<Company> companies = new ArrayList<>();
+    public static final int START_ID_MINUS_ONE = 0;
+
     static {
         companies.add(new Company(100L, "OOCL Philippines"));
         companies.add(new Company(101L, "OOCL Indonesia"));
@@ -44,5 +46,19 @@ public class CompanyRepository {
             index++;
         }
         return filteredCompanyList;
+    }
+
+    public Company createCompany(Company company) {
+        Long maxId = generateNextCompanyId();
+        Company newCompany = new Company(maxId, company.getCompanyName());
+        companies.add(newCompany);
+        return newCompany;
+    }
+
+    private Long generateNextCompanyId() {
+        return companies.stream()
+                .mapToLong(Company::getCompanyId)
+                .max()
+                .orElse(START_ID_MINUS_ONE) + 1;
     }
 }
