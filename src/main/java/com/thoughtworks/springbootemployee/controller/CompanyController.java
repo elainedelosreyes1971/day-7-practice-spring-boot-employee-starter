@@ -44,4 +44,10 @@ public class CompanyController {
         company.setCompanyName(newCompany.getCompanyName());
         return company;
     }
+
+    @DeleteMapping("/{companyId}")
+    public String deleteCompany(@PathVariable long companyId){
+        companyRepository.deleteCompany(companyId);
+        return "Company Deleted!";
+    }
 }

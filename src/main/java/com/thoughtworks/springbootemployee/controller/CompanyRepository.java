@@ -61,4 +61,8 @@ public class CompanyRepository {
                 .max()
                 .orElse(START_ID_MINUS_ONE) + 1;
     }
+
+    public void deleteCompany(long companyId) {
+        companies.removeIf(company -> company.getCompanyId().equals(companyId));
+    }
 }
