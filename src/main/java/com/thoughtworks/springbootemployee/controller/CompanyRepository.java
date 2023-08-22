@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
@@ -23,5 +24,13 @@ public class CompanyRepository {
                 .filter(employee -> employee.getCompanyId().equals(id))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
+    }
+
+    public List<Employee> findEmployeesUnderCompany(Long companyId) {
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+        List<Employee> employees = employeeRepository.listAll();
+        return employees.stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .collect(Collectors.toList());
     }
 }

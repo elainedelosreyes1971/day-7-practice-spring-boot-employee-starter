@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
     static {
-        employees.add(new Employee(1L, "Alice", 30, "Female", 5000));
-        employees.add(new Employee(2L, "Bob", 31, "Male", 6000));
-        employees.add(new Employee(3L, "Carl", 32, "Male", 7000));
-        employees.add(new Employee(4L, "David", 33, "Male", 8000));
-        employees.add(new Employee(5L, "Elen", 34, "Female", 9000));
+        employees.add(new Employee(100L,1L, "Alice", 30, "Female", 5000));
+        employees.add(new Employee(101L,2L, "Bob", 31, "Male", 6000));
+        employees.add(new Employee(102L,3L, "Carl", 32, "Male", 7000));
+        employees.add(new Employee(101L,4L, "David", 33, "Male", 8000));
+        employees.add(new Employee(100L,5L, "Elen", 34, "Female", 9000));
     }
     public List<Employee> listAll() {
         return employees;
@@ -37,7 +37,7 @@ public class EmployeeRepository {
 
     public Employee createEmployee(Employee employee) {
         Long maxId = generateId();
-        employees.add(new Employee(++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary()));
+        employees.add(new Employee(employee.getCompanyId(), ++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary()));
         return employee;
     }
 
