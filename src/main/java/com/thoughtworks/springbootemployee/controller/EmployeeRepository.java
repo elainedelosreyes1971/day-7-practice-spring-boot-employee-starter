@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Repository
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
@@ -45,5 +46,17 @@ public class EmployeeRepository {
                 .max(Comparator.comparingLong(Employee::getId))
                 .orElseThrow(EmployeeNotFoundException::new)
                 .getId();
+    }
+
+    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+        int index = 0;
+        List<Employee> filteredList = new ArrayList<>();
+        for(Employee employee : employees){
+            if((index >= pageNumber) && (index <= pageSize)){
+                filteredList.add(employee);
+            }
+            index++;
+        }
+        return filteredList;
     }
 }
