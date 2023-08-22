@@ -1,10 +1,14 @@
 package com.thoughtworks.springbootemployee.controller;public class Company {
-    private final Long companyId;
-    private final String companyName;
+    private Long companyId;
+    private String companyName;
 
     public Company(Long companyId, String companyName) {
 
         this.companyId = companyId;
+        this.companyName = companyName;
+    }
+
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
@@ -15,4 +19,5 @@ package com.thoughtworks.springbootemployee.controller;public class Company {
     public String getCompanyName() {
         return companyName;
     }
+
 }

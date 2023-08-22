@@ -37,4 +37,11 @@ public class CompanyController {
     public Company createCompany(@RequestBody Company company){
         return companyRepository.createCompany(company);
     }
+
+    @PutMapping("/{companyId}")
+    public Company updateCompany(@PathVariable long companyId, @RequestBody Company newCompany){
+        Company company = companyRepository.findByCompanyId(companyId);
+        company.setCompanyName(newCompany.getCompanyName());
+        return company;
+    }
 }
