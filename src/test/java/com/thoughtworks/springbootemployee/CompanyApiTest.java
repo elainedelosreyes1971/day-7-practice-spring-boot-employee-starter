@@ -105,4 +105,15 @@ public class CompanyApiTest {
                 .andExpect(jsonPath("$[0].id").value(newCompany.getId()))
                 .andExpect(jsonPath("$[0].name").value(newCompany.getName()));
     }
+
+    @Test
+    void should_return_exception_when_perform_delete_given_company_id_is_not_existing() throws Exception {
+        //given
+        companyRepository.insert(new Company(2L, "OOCL HongKong"));
+        long notExistingId = 90L;
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + notExistingId))
+                .andExpect(status().isNoContent());
+    }
 }
