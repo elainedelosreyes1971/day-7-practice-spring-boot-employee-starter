@@ -53,4 +53,14 @@ public class CompanyApiTest {
                 .andExpect(jsonPath("$.id").value(newCompany.getId()))
                 .andExpect(jsonPath("$.name").value(newCompany.getName()));
     }
+
+    @Test
+    void should_return_404_not_found_when_perform_get_company_given_a_not_existing_id() throws Exception {
+        //given
+        long notExistingCompanyId = 99L;
+
+        //when , then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + notExistingCompanyId))
+                .andExpect(status().isNotFound());
+    }
 }
