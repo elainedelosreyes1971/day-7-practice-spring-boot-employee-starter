@@ -7,8 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
 
@@ -84,5 +83,27 @@ public class EmployeeServiceTest {
         assertEquals(25, employeeResponse.getAge());
         assertEquals("Male", employeeResponse.getGender());
         assertEquals(2000, employeeResponse.getSalary());
+    }
+
+    @Test
+    void should_set_active_status_to_false_when_delete_given_employee_service_and_deleted_employee(){
+        //given
+        Employee employee = new Employee(1L, 1L, "Lucy", 30, "Female", 3000);
+        employee.setActiveStatus(Boolean.TRUE);
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+
+        //when
+        employeeService.delete(employee.getId());
+
+        //then
+        verify(mockedEmployeeRepository).update(eq(employee.getId()), argThat(tempEmployee -> {
+            assertFalse(tempEmployee.getActiveStatus());
+            assertEquals(1L, tempEmployee.getCompanyId());
+            assertEquals("Lucy", tempEmployee.getName());
+            assertEquals(30, tempEmployee.getAge());
+            assertEquals("Female", tempEmployee.getGender());
+            assertEquals(3000, tempEmployee.getSalary());
+            return true;
+        }));
     }
 }

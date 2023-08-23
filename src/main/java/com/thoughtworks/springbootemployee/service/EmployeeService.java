@@ -18,4 +18,10 @@ public class EmployeeService {
         employee.setActiveStatus(true);
         return employeeRepository.insert(employee);
     }
+
+    public void delete(Long id) {
+        Employee matchedEmployee = employeeRepository.findById(id);
+        matchedEmployee.setActiveStatus(Boolean.FALSE);
+        employeeRepository.update(id, matchedEmployee);
+    }
 }
