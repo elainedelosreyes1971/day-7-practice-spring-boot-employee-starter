@@ -10,7 +10,11 @@ public class Employee {
     private Boolean activeStatus;
 
 
-    public Employee() {
+    public Employee(String name, Integer age, String gender, Integer salary) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
     }
 
     public Employee(long companyId, long id, String name, Integer age, String gender, Integer salary) {
@@ -66,5 +70,21 @@ public class Employee {
 
     public void setActiveStatus(Boolean activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 }

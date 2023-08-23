@@ -70,4 +70,14 @@ public class EmployeeRepository {
         Employee toRemovedEmployee = findById(id);
         employees.remove(toRemovedEmployee);
     }
+
+    public void cleanAll() {
+        employees.clear();
+    }
+
+    public Employee insert(Employee employee) {
+        employee.setId(generateId());
+        employees.add(employee);
+        return employee;
+    }
 }
