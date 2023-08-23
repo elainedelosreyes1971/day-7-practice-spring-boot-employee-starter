@@ -98,6 +98,7 @@ class EmployeeApiTests {
         Employee alice = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
         Employee newEmployeeData = new Employee(alice.getName(), 25, alice.getGender(), 10000);
 
+        newEmployeeData.setActiveStatus(true);
         //when , //then
         mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/" + alice.getId())
                         .contentType(MediaType.APPLICATION_JSON)

@@ -124,7 +124,7 @@ public class EmployeeServiceTest {
         employeeService.create(newEmployee);
         employeeService.delete(employeeToUpdate.getId());
         InactiveEmployeeException inactiveEmployeeException = assertThrows(InactiveEmployeeException.class, () -> {
-            employeeService.update(employeeToUpdate);
+            employeeService.update(employeeToUpdate.getId(), employeeToUpdate);
         });
 
         //then
@@ -141,7 +141,7 @@ public class EmployeeServiceTest {
 
         //when
         employeeToUpdate.setActiveStatus(true);
-        employeeService.update(employeeToUpdate);
+        employeeService.update(employeeToUpdate.getId(), employeeToUpdate);
 
         //then
         verify(mockedEmployeeRepository).update(eq(employeeToUpdate.getId()), argThat(tempEmployee -> {

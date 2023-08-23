@@ -4,9 +4,12 @@ import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.exception.InactiveEmployeeException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
@@ -28,11 +31,12 @@ public class EmployeeService {
         employeeRepository.update(id, matchedEmployee);
     }
 
-    public void update(Employee employee) {
-        if (employee.getActiveStatus().equals(false)) {
+    public Employee update(Long id, Employee employee) {
+        Boolean activeStatus = Optional.ofNullable(employee.getActiveStatus()).orElse(false);
+        if (Boolean.FALSE.equals(activeStatus)) {
             throw new InactiveEmployeeException();
         }
-        employeeRepository.update(employee.getId(), employee);
+        return employeeRepository.update(id, employee);
     }
 
     public List<Employee> listAll() {
@@ -43,7 +47,11 @@ public class EmployeeService {
         return employeeRepository.findByGender(gender);
     }
 
-    public void listByPage(Long pageNumber, Long pageSize) {
-        employeeRepository.listByPage(pageNumber, pageSize);
+    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+        return employeeRepository.listByPage(pageNumber, pageSize);
+    }
+
+    public Employee findById(Long id) {
+        return employeeRepository.findById(id);
     }
 }
