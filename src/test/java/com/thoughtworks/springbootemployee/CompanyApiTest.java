@@ -79,4 +79,14 @@ public class CompanyApiTest {
                 .andExpect(jsonPath("$.id").value(notNullValue()))
                 .andExpect(jsonPath("$.name").value(newCompany.getName()));
     }
+
+    @Test
+    void should_delete_an_company_when_perform_delete_given_company_id() throws Exception {
+        //given
+        Company newCompany = companyRepository.insert(new Company(1L, "OOCL Philippines"));
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + newCompany.getId()))
+                .andExpect(status().isNoContent());
+    }
 }
