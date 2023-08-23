@@ -125,4 +125,29 @@ public class EmployeeServiceTest {
         //then
         assertEquals("Employee is inactive.", inactiveEmployeeException.getMessage());
     }
+
+    @Test
+    void should_return_updated_employee_data_when_update_given_employee_service_and_employee(){
+        //given
+        Employee newEmployee = new Employee(1L,2L, "Jennifer", 45, "Female", 3000);
+        Employee employeeToUpdate = new Employee(1L,2L, "Jennifer", 47, "Female", 4000);
+
+        when(mockedEmployeeRepository.update(newEmployee.getId(), newEmployee)).thenReturn(employeeToUpdate);
+
+        //when
+        employeeToUpdate.setActiveStatus(true);
+        employeeService.update(employeeToUpdate);
+
+        //then
+        verify(mockedEmployeeRepository).update(eq(employeeToUpdate.getId()), argThat(tempEmployee -> {
+            assertTrue(tempEmployee.getActiveStatus());
+            assertEquals(1L, tempEmployee.getCompanyId());
+            assertEquals(2L, tempEmployee.getId());
+            assertEquals("Jennifer", tempEmployee.getName());
+            assertEquals(47, tempEmployee.getAge());
+            assertEquals("Female", tempEmployee.getGender());
+            assertEquals(4000, tempEmployee.getSalary());
+            return true;
+        }));
+    }
 }
