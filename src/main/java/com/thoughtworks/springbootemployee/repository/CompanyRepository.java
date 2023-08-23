@@ -70,4 +70,14 @@ public class CompanyRepository {
         companyToUpdate.setName(company.getName());
         return companyToUpdate;
     }
+
+    public void cleanAll() {
+        companies.clear();
+    }
+
+    public Company insert(Company company) {
+        company.setName(company.getName());
+        companies.add(company);
+        return company;
+    }
 }

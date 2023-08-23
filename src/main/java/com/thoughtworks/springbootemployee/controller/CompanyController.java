@@ -47,10 +47,8 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyId}")
-    public String deleteCompany(@PathVariable long companyId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCompany(@PathVariable long companyId) {
         companyRepository.deleteCompany(companyId);
-        return "Company Deleted!";
     }
-
-    //TODO pageLogic method
 }
