@@ -69,4 +69,10 @@ public class CompanyRepository {
     public void deleteCompany(long companyId) {
         companies.removeIf(company -> company.getId().equals(companyId));
     }
+
+    public Company update(long id, Company company) {
+        Company companyToUpdate = findByCompanyId(id);
+        companyToUpdate.setName(company.getName());
+        return companyToUpdate;
+    }
 }
