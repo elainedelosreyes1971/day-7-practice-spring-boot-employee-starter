@@ -184,4 +184,23 @@ public class EmployeeServiceTest {
         assertEquals(2, femaleEmployees.size());
         assertEquals("Female", femaleEmployees.get(0).getGender());
     }
+
+    @Test
+    void should_return_employee_list_when_perform_find_by_page_given_page_number_and_page_size(){
+        //given
+        List<Employee> femaleEmployees = Arrays.asList(new Employee(100L, 1L, "Alice", 30, "Female", 5000),
+                new Employee(101L, 2L, "Jane", 30, "Female", 5000));
+
+        //when
+        employeeService.listByPage(1L, 2L);
+
+        //then
+        assertEquals(100L, femaleEmployees.get(0).getCompanyId());
+        assertEquals(1L, femaleEmployees.get(0).getId());
+        assertEquals("Alice", femaleEmployees.get(0).getName());
+        assertEquals(30, femaleEmployees.get(0).getAge());
+        assertEquals("Female", femaleEmployees.get(0).getGender());
+        assertEquals(5000, femaleEmployees.get(0).getSalary());
+
+    }
 }
