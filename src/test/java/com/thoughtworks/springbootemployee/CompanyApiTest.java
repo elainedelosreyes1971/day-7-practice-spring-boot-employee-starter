@@ -89,4 +89,20 @@ public class CompanyApiTest {
         mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + newCompany.getId()))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void should_return_list_of_companies_when_perform_get_given_pageNumber_and_pageSize() throws Exception {
+        //given
+        companyRepository.insert(new Company(2L, "OOCL HongKong"));
+        Company newCompany = companyRepository.insert(new Company(1L, "OOCL Philippines"));
+        companyRepository.insert(new Company(3L, "OOCL Indonesia"));
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/")
+                        .param("pageSize", String.valueOf(1))
+                        .param("pageNumber", String.valueOf(2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(newCompany.getId()))
+                .andExpect(jsonPath("$[0].name").value(newCompany.getName()));
+    }
 }
