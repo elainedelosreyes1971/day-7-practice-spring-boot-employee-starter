@@ -7,6 +7,9 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -16,15 +19,16 @@ public class EmployeeServiceTest {
     private EmployeeRepository mockedEmployeeRepository;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         mockedEmployeeRepository = mock(EmployeeRepository.class);
         employeeService = new EmployeeService(mockedEmployeeRepository);
     }
+
     @Test
-    void should_return_created_employee_when_create_given_employee_service_and_employee_with_valid_age(){
+    void should_return_created_employee_when_create_given_employee_service_and_employee_with_valid_age() {
         //given
-        Employee employee = new Employee(1L,null, "Lucy", 20, "Female", 3000);
-        Employee savedEmployee = new Employee(1L,1L, "Lucy", 20, "Female", 3000);
+        Employee employee = new Employee(1L, null, "Lucy", 20, "Female", 3000);
+        Employee savedEmployee = new Employee(1L, 1L, "Lucy", 20, "Female", 3000);
 
         when(mockedEmployeeRepository.insert(employee)).thenReturn(savedEmployee);
 
@@ -41,9 +45,10 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_less_than_18(){
+    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_less_than_18() {
         //given
         Employee employee = new Employee(1L, null, "Lucy", 17, "Female", 3000);
+
         //when
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
             employeeService.create(employee);
@@ -54,9 +59,9 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_greater_than_65(){
+    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_greater_than_65() {
         //given
-        Employee oldEmployee = new Employee(1L,null, "Dan", 66, "Male", 3000);
+        Employee oldEmployee = new Employee(1L, null, "Dan", 66, "Male", 3000);
         //when
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
             employeeService.create(oldEmployee);
@@ -67,9 +72,9 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_active_status_default_to_true_when_create_given_employee_service_and_newly_created_employee(){
+    void should_return_active_status_default_to_true_when_create_given_employee_service_and_newly_created_employee() {
         //given
-        Employee newEmployee = new Employee(1L,null, "Keith", 25, "Male", 2000);
+        Employee newEmployee = new Employee(1L, null, "Keith", 25, "Male", 2000);
         Employee savedEmployee = new Employee(1L, 1L, "Keith", 25, "Male", 2000);
         when(mockedEmployeeRepository.insert(newEmployee)).thenReturn(savedEmployee);
 
@@ -87,7 +92,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_set_active_status_to_false_when_delete_given_employee_service_and_deleted_employee(){
+    void should_set_active_status_to_false_when_delete_given_employee_service_and_deleted_employee() {
         //given
         Employee employee = new Employee(1L, 1L, "Lucy", 30, "Female", 3000);
         employee.setActiveStatus(Boolean.TRUE);
@@ -109,10 +114,10 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_exception_when_updating_employee_data_given_employee_service_and_employee(){
+    void should_return_exception_when_updating_employee_data_given_employee_service_and_employee() {
         //given
-        Employee newEmployee = new Employee(1L,2L, "Jennifer", 45, "Female", 3000);
-        Employee employeeToUpdate = new Employee(1L,2L, "Jennifer", 47, "Female", 4000);
+        Employee newEmployee = new Employee(1L, 2L, "Jennifer", 45, "Female", 3000);
+        Employee employeeToUpdate = new Employee(1L, 2L, "Jennifer", 47, "Female", 4000);
 
         when(mockedEmployeeRepository.findById(newEmployee.getId())).thenReturn(employeeToUpdate);
         //when
@@ -127,10 +132,10 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_data_when_update_given_employee_service_and_employee(){
+    void should_return_updated_employee_data_when_update_given_employee_service_and_employee() {
         //given
-        Employee newEmployee = new Employee(1L,2L, "Jennifer", 45, "Female", 3000);
-        Employee employeeToUpdate = new Employee(1L,2L, "Jennifer", 47, "Female", 4000);
+        Employee newEmployee = new Employee(1L, 2L, "Jennifer", 45, "Female", 3000);
+        Employee employeeToUpdate = new Employee(1L, 2L, "Jennifer", 47, "Female", 4000);
 
         when(mockedEmployeeRepository.update(newEmployee.getId(), newEmployee)).thenReturn(employeeToUpdate);
 
@@ -149,5 +154,20 @@ public class EmployeeServiceTest {
             assertEquals(4000, tempEmployee.getSalary());
             return true;
         }));
+    }
+
+    @Test
+    void should_return_all_employees_when_perform_find_all_given_list_of_employees() {
+        //given
+        List<Employee> employees = Arrays.asList(new Employee(100L, 1L, "Alice", 30, "Female", 5000),
+                new Employee(101L, 2L, "John", 30, "Male", 5000));
+
+        when(mockedEmployeeRepository.listAll()).thenReturn(employees);
+
+        //when
+        List<Employee> newEmployees = employeeService.listAll();
+
+        //then
+        assertEquals(2, newEmployees.size());
     }
 }

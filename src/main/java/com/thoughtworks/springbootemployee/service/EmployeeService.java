@@ -5,6 +5,8 @@ import com.thoughtworks.springbootemployee.exception.InactiveEmployeeException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 
+import java.util.List;
+
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
@@ -31,5 +33,9 @@ public class EmployeeService {
             throw new InactiveEmployeeException();
         }
         employeeRepository.update(employee.getId(), employee);
+    }
+
+    public List<Employee> listAll() {
+        return employeeRepository.listAll();
     }
 }
