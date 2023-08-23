@@ -6,8 +6,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -65,5 +64,25 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals("Employee must be 18 ~ 65 years old.", employeeCreateException.getMessage());
+    }
+
+    @Test
+    void should_return_active_status_default_to_true_when_create_given_employee_service_and_newly_created_employee(){
+        //given
+        Employee newEmployee = new Employee(1L,null, "Keith", 25, "Male", 2000);
+        Employee savedEmployee = new Employee(1L, 1L, "Keith", 25, "Male", 2000);
+        when(mockedEmployeeRepository.insert(newEmployee)).thenReturn(savedEmployee);
+
+        //when
+        Employee employeeResponse = employeeService.create(newEmployee);
+
+        //then
+        assertTrue(newEmployee.getActiveStatus());
+        assertEquals(savedEmployee.getCompanyId(), employeeResponse.getCompanyId());
+        assertEquals(savedEmployee.getId(), employeeResponse.getId());
+        assertEquals("Keith", employeeResponse.getName());
+        assertEquals(25, employeeResponse.getAge());
+        assertEquals("Male", employeeResponse.getGender());
+        assertEquals(2000, employeeResponse.getSalary());
     }
 }
