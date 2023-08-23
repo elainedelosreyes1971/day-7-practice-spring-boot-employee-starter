@@ -116,4 +116,19 @@ public class CompanyApiTest {
         mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + notExistingId))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void should_update_company_name_when_put_given_a_new_company_name() throws Exception {
+        //given
+        Company newCompany = companyRepository.insert(new Company(1L, "OOCL Philippines"));
+        Company companyToUpdate = new Company(1L, "OOCL Indonesia");
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/companies/" + newCompany.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(companyToUpdate)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.name").value(newCompany.getName()));
+    }
 }
