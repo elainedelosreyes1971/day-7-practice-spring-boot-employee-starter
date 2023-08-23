@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -62,5 +65,18 @@ public class CompanyApiTest {
         //when , then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + notExistingCompanyId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_return_company_created_when_perform_post_companies_given_a_new_company_with_JSON_format() throws Exception {
+        //given
+        Company newCompany = companyRepository.insert(new Company(1L, "OOCL Philippines"));
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(newCompany)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.name").value(newCompany.getName()));
     }
 }
