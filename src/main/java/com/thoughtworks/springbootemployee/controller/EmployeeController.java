@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,15 +36,18 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable long id, @RequestBody Employee newEmployee) {
-        Employee employee = employeeRepository.findById(id);
-        employee.setAge(newEmployee.getAge());
-        employee.setSalary(newEmployee.getSalary());
-        return employee;
+    public Employee updateEmployee(@PathVariable long id, @RequestBody Employee employee) {
+        return employeeRepository.update(id, employee);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
         return employeeRepository.listByPage(pageNumber, pageSize);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable Long id){
+        employeeRepository.delete(id);
     }
 }

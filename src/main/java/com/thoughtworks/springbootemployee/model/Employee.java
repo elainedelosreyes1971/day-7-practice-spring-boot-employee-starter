@@ -1,4 +1,4 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.model;
 
 public class Employee {
     private Long id;
@@ -7,6 +7,7 @@ public class Employee {
     private String gender;
     private Integer salary;
     private Long companyId;
+    private Boolean activeStatus;
 
 
     public Employee() {
@@ -19,6 +20,7 @@ public class Employee {
         this.age = age;
         this.gender = gender;
         this.salary = salary;
+        this.activeStatus = getActiveStatus();
     }
 
     public Long getId() {
@@ -51,5 +53,18 @@ public class Employee {
 
     public void setSalary(Integer salary) {
         this.salary = salary;
+    }
+
+    public void merge(Employee employee) {
+        this.age = employee.age;
+        this.salary = employee.salary;
+    }
+
+    public Boolean getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Boolean activeStatus) {
+        this.activeStatus = activeStatus;
     }
 }

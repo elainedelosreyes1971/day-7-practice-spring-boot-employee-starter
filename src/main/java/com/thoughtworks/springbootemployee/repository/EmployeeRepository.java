@@ -1,5 +1,7 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.repository;
 
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -52,14 +54,20 @@ public class EmployeeRepository {
     }
 
     public List<Employee> listByPage(Long pageNumber, Long pageSize) {
-        int index = 1;
-        List<Employee> filteredList = new ArrayList<>();
-        for (Employee employee : employees) {
-            if (index >= pageNumber && index <= pageSize) {
-                filteredList.add(employee);
-            }
-            index++;
-        }
-        return filteredList;
+        return employees.stream()
+                .skip((pageNumber - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
+
+    public Employee update(long id, Employee employee) {
+        Employee employeeToUpdate = findById(id);
+        employeeToUpdate.merge(employee);
+        return employeeToUpdate;
+    }
+
+    public void delete(Long id) {
+        Employee toRemovedEmployee = findById(id);
+        employees.remove(toRemovedEmployee);
     }
 }

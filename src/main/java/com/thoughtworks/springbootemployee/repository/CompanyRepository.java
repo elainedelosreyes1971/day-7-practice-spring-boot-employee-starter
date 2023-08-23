@@ -1,5 +1,8 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.repository;
 
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
