@@ -170,4 +170,18 @@ public class EmployeeServiceTest {
         //then
         assertEquals(2, newEmployees.size());
     }
+
+    @Test
+    void should_return_list_of_employees_when_perform_find_by_gender_given_employee_list_and_gender(){
+        //given
+        List<Employee> femaleEmployees = Arrays.asList(new Employee(100L, 1L, "Alice", 30, "Female", 5000),
+                new Employee(101L, 2L, "Jane", 30, "Female", 5000));
+
+        //when
+        when(mockedEmployeeRepository.findByGender("Female")).thenReturn(femaleEmployees);
+
+        //then
+        assertEquals(2, femaleEmployees.size());
+        assertEquals("Female", femaleEmployees.get(0).getGender());
+    }
 }

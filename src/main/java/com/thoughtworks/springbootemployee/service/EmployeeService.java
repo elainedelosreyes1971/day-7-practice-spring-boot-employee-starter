@@ -38,4 +38,8 @@ public class EmployeeService {
     public List<Employee> listAll() {
         return employeeRepository.listAll();
     }
+
+    public List<Employee> findByGender(String gender) {
+        return employeeRepository.findByGender(gender);
+    }
 }
