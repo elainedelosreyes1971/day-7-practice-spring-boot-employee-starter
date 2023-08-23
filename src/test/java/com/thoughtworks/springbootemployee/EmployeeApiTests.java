@@ -159,7 +159,7 @@ class EmployeeApiTests {
     @Test
     void should_return_exception_when_perform_delete_given_employee_id_is_not_existing() throws Exception {
         //given
-        Employee employee = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
+        employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
         long notExistingId = 90L;
 
         //when , //then

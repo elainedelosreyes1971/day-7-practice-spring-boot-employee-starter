@@ -13,7 +13,7 @@ public class EmployeeService {
     }
 
     public Employee create(Employee employee) {
-        if(employee.hasInvalidAge()){
+        if (employee.hasInvalidAge()) {
             throw new EmployeeCreateException();
         }
         employee.setActiveStatus(true);
@@ -27,7 +27,7 @@ public class EmployeeService {
     }
 
     public void update(Employee employee) {
-        if(employee.getActiveStatus().equals(false)){
+        if (employee.getActiveStatus().equals(false)) {
             throw new InactiveEmployeeException();
         }
         employeeRepository.update(employee.getId(), employee);

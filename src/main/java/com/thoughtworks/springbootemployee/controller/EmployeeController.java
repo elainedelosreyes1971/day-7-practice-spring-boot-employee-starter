@@ -32,7 +32,7 @@ public class EmployeeController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping()
     public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeRepository.createEmployee(employee);
+        return employeeRepository.insert(employee);
     }
 
     @PutMapping("/{id}")
@@ -47,7 +47,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployee(@PathVariable Long id){
+    public void deleteEmployee(@PathVariable Long id) {
         employeeRepository.delete(id);
     }
 }

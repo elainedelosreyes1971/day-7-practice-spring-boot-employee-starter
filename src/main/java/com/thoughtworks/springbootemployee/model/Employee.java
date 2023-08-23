@@ -11,9 +11,10 @@ public class Employee {
     private Long companyId;
     private Boolean activeStatus;
 
-    public Employee(){
+    public Employee() {
 
     }
+
     public Employee(String name, Integer age, String gender, Integer salary) {
         this.name = name;
         this.age = age;
