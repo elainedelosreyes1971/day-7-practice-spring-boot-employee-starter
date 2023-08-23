@@ -131,4 +131,16 @@ public class CompanyApiTest {
                 .andExpect(jsonPath("$.id").value(notNullValue()))
                 .andExpect(jsonPath("$.name").value(newCompany.getName()));
     }
+
+    @Test
+    void should_filter_employees_in_a_company_when_get_given_company_id_and_employee_id() throws Exception {
+        //given
+        long existingCompanyId = 100L;
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + existingCompanyId + "/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].companyId").value(notNullValue()));
+    }
 }
