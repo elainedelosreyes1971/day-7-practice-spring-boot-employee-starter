@@ -42,4 +42,15 @@ public class CompanyApiTest {
                 .andExpect(jsonPath("$[0].id").value(newCompany.getId()))
                 .andExpect(jsonPath("$[0].name").value(newCompany.getName()));
     }
+    @Test
+    void should_return_the_company_when_perform_get_company_given_company_id() throws Exception {
+        //given
+        Company newCompany = companyRepository.insert(new Company(1L, "OOCL Philippines"));
+
+        //when ,  //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + newCompany.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(newCompany.getId()))
+                .andExpect(jsonPath("$.name").value(newCompany.getName()));
+    }
 }
