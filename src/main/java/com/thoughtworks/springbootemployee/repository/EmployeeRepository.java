@@ -39,12 +39,6 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public Employee createEmployee(Employee employee) {
-        employee.setId(generateId());
-        employees.add(employee);
-        return employee;
-    }
-
     private Long generateId() {
         return employees.stream()
                 .mapToLong(Employee::getId)
