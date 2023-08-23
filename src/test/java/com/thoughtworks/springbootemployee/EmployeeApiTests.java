@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmployeeApiTests {
+class EmployeeApiTests {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -137,10 +137,10 @@ public class EmployeeApiTests {
     @Test
     void should_return_list_of_employees_when_perform_get_given_pageNumber_and_pageSize() throws Exception {
         //given
-        Employee alice = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
+        employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
         Employee jane = employeeRepository.insert(new Employee("Jane", 25, "Female", 9000));
-        Employee david = employeeRepository.insert(new Employee("David", 26, "Male", 9000));
-        Employee emily = employeeRepository.insert(new Employee("Emily", 27, "Female", 9000));
+        employeeRepository.insert(new Employee("David", 26, "Male", 9000));
+        employeeRepository.insert(new Employee("Emily", 27, "Female", 9000));
 
         //when , //then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/")
