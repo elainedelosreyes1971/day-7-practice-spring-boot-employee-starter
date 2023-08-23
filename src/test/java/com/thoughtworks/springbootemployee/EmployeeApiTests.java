@@ -153,4 +153,15 @@ class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].gender").value(jane.getGender()))
                 .andExpect(jsonPath("$[0].salary").value(jane.getSalary()));
     }
+
+    @Test
+    void should_return_exception_when_perform_delete_given_employee_id_is_not_existing() throws Exception {
+        //given
+        Employee employee = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
+        long notExistingId = 90L;
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + notExistingId))
+                .andExpect(status().isNotFound());
+    }
 }
