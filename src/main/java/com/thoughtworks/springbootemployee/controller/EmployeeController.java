@@ -41,8 +41,11 @@ public class EmployeeController {
         return employee;
     }
 
+    //TODO check the page Logic
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
         return employeeRepository.listByPage(pageNumber, pageSize);
     }
+
+    //TODO create a delete method
 }
