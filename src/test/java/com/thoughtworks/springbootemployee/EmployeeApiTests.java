@@ -28,7 +28,7 @@ public class EmployeeApiTests {
     private MockMvc mockMvcClient;
 
     @BeforeEach
-    void cleanupEmployeeData(){
+    void cleanupEmployeeData() {
         employeeRepository.cleanAll();
     }
 
@@ -125,7 +125,7 @@ public class EmployeeApiTests {
     }
 
     @Test
-    void should_delete_an_employee_when_perform_delete_given_employee_id() throws Exception{
+    void should_delete_an_employee_when_perform_delete_given_employee_id() throws Exception {
         //given
         Employee alice = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
 
@@ -153,5 +153,4 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].gender").value(jane.getGender()))
                 .andExpect(jsonPath("$[0].salary").value(jane.getSalary()));
     }
-
 }
