@@ -70,4 +70,20 @@ public class EmployeeApiTests {
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + notExistingEmployeeId))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_return_the_employees_by_given_gender_when_perform_get_employees() throws Exception {
+        //given
+        Employee alice = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
+        employeeRepository.insert(new Employee("Bob", 28, "Male", 8000));
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender", "Female"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(alice.getId()))
+                .andExpect(jsonPath("$[0].name").value(alice.getName()))
+                .andExpect(jsonPath("$[0].age").value(alice.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(alice.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(alice.getSalary()));
+    }
 }
