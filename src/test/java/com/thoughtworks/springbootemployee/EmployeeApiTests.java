@@ -134,4 +134,24 @@ public class EmployeeApiTests {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    void should_return_list_of_employees_when_perform_get_given_pageNumber_and_pageSize() throws Exception {
+        //given
+        Employee alice = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
+        Employee jane = employeeRepository.insert(new Employee("Jane", 25, "Female", 9000));
+        Employee david = employeeRepository.insert(new Employee("David", 26, "Male", 9000));
+        Employee emily = employeeRepository.insert(new Employee("Emily", 27, "Female", 9000));
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/")
+                        .param("pageSize", String.valueOf(1))
+                        .param("pageNumber", String.valueOf(2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(jane.getId()))
+                .andExpect(jsonPath("$[0].name").value(jane.getName()))
+                .andExpect(jsonPath("$[0].age").value(jane.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(jane.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(jane.getSalary()));
+    }
+
 }
