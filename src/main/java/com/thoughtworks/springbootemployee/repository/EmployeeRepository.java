@@ -5,7 +5,6 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
+    public static final int START_ID_MINUS_ONE = 0;
 
     static {
         employees.add(new Employee(100L, 1L, "Alice", 30, "Female", 5000));
@@ -48,9 +48,9 @@ public class EmployeeRepository {
 
     private Long generateId() {
         return employees.stream()
-                .max(Comparator.comparingLong(Employee::getId))
-                .orElseThrow(EmployeeNotFoundException::new)
-                .getId();
+                .mapToLong(Employee::getId)
+                .max()
+                .orElse(START_ID_MINUS_ONE) + 1;
     }
 
     public List<Employee> listByPage(Long pageNumber, Long pageSize) {

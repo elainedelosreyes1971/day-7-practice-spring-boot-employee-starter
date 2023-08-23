@@ -41,15 +41,10 @@ public class CompanyRepository {
     }
 
     public List<Company> listCompanyByPage(Long pageNumber, Long pageSize) {
-        int index = 1;
-        List<Company> filteredCompanyList = new ArrayList<>();
-        for (Company company : companies) {
-            if (index >= pageNumber && index <= pageSize) {
-                filteredCompanyList.add(company);
-            }
-            index++;
-        }
-        return filteredCompanyList;
+        return companies.stream()
+                .skip((pageNumber - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 
     public Company createCompany(Company company) {
