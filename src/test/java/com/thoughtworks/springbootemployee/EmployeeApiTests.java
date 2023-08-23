@@ -36,11 +36,13 @@ class EmployeeApiTests {
     void should_return_all_given_employees_when_perform_get_employees() throws Exception {
         //given
         Employee alice = employeeRepository.insert(new Employee("Alice", 24, "Female", 9000));
+        employeeRepository.insert(new Employee("Jennifer", 25, "Female", 8000));
+        employeeRepository.insert(new Employee("Wee", 25, "Female", 10000));
 
         //when //then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").value(alice.getId()))
                 .andExpect(jsonPath("$[0].name").value(alice.getName()))
                 .andExpect(jsonPath("$[0].age").value(alice.getAge()))
