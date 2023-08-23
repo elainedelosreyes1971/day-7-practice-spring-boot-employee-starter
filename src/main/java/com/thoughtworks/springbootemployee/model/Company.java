@@ -1,25 +1,25 @@
 package com.thoughtworks.springbootemployee.model;
 
 public class Company {
-    private final Long companyId;
-    private String companyName;
+    private final Long id;
+    private String name;
 
-    public Company(Long companyId, String companyName) {
+    public Company(Long id, String name) {
 
-        this.companyId = companyId;
-        this.companyName = companyName;
+        this.id = id;
+        this.name = name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Long getCompanyId() {
-        return companyId;
+    public Long getId() {
+        return id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getName() {
+        return name;
     }
 
 }

@@ -27,7 +27,7 @@ public class CompanyRepository {
 
     public Company findByCompanyId(Long id) {
         return companies.stream()
-                .filter(employee -> employee.getCompanyId().equals(id))
+                .filter(employee -> employee.getId().equals(id))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
     }
@@ -54,19 +54,19 @@ public class CompanyRepository {
 
     public Company createCompany(Company company) {
         Long maxId = generateNextCompanyId();
-        Company newCompany = new Company(maxId, company.getCompanyName());
+        Company newCompany = new Company(maxId, company.getName());
         companies.add(newCompany);
         return newCompany;
     }
 
     private Long generateNextCompanyId() {
         return companies.stream()
-                .mapToLong(Company::getCompanyId)
+                .mapToLong(Company::getId)
                 .max()
                 .orElse(START_ID_MINUS_ONE) + 1;
     }
 
     public void deleteCompany(long companyId) {
-        companies.removeIf(company -> company.getCompanyId().equals(companyId));
+        companies.removeIf(company -> company.getId().equals(companyId));
     }
 }
