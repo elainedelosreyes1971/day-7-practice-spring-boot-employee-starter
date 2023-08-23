@@ -107,4 +107,20 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.gender").value(alice.getGender()))
                 .andExpect(jsonPath("$.salary").value(newEmployeeData.getSalary()));
     }
+
+    @Test
+    void should_return_employee_created_when_perform_post_employees_given_a_new_employee_with_JSON_format() throws Exception {
+        //given
+        Employee newEmployee = new Employee("Alice", 24, "Female", 9000);
+
+        //when , //then
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/employees")
+                        .contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(newEmployee)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.name").value(newEmployee.getName()))
+                .andExpect(jsonPath("$.age").value(newEmployee.getAge()))
+                .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
+                .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
+    }
 }
