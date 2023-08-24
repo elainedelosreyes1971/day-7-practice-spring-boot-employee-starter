@@ -56,14 +56,6 @@ public class Employee {
         return salary;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
-    }
-
     public void merge(Employee employee) {
         this.age = employee.age;
         this.salary = employee.salary;
@@ -79,18 +71,6 @@ public class Employee {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
     }
 
     public boolean hasInvalidAge() {
