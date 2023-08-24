@@ -2,7 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,42 +13,42 @@ import java.util.List;
 @RestController
 public class CompanyController {
     @Autowired
-    private CompanyRepository companyRepository;
+    private CompanyService companyService;
 
     @GetMapping()
     public List<Company> listAllCompanies() {
-        return companyRepository.listAllCompanies();
+        return companyService.listAllCompanies();
     }
 
     @GetMapping("/{companyId}")
     public Company findByCompanyId(@PathVariable Long companyId) {
-        return companyRepository.findByCompanyId(companyId);
+        return companyService.findByCompanyId(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
     public List<Employee> findEmployeesUnderCompany(@PathVariable Long companyId) {
-        return companyRepository.findEmployeesUnderCompany(companyId);
+        return companyService.findEmployeesUnderCompany(companyId);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Company> listCompanyByPage(@RequestParam Long pageNumber, Long pageSize) {
-        return companyRepository.listCompanyByPage(pageNumber, pageSize);
+        return companyService.listCompanyByPage(pageNumber, pageSize);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     public Company createCompany(@RequestBody Company company) {
-        return companyRepository.createCompany(company);
+        return companyService.createCompany(company);
     }
 
     @PutMapping("/{companyId}")
     public Company updateCompany(@PathVariable long companyId, @RequestBody Company newCompany) {
-        return companyRepository.update(companyId, newCompany);
+        return companyService.update(companyId, newCompany);
     }
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable long companyId) {
-        companyRepository.deleteCompany(companyId);
+        companyService.deleteCompany(companyId);
     }
 }
